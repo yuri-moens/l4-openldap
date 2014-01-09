@@ -31,6 +31,9 @@ class L4OpenLdapUserProvider implements UserProviderInterface {
 	{
 		$this->config = $config;
 		$this->db_conn = $db_conn;
+		
+		if (!extension_loaded('ldap'))
+			throw new \Exception("PHP LDAP extension not loaded.");
 
 		if (!$this->conn = ldap_connect("ldap://{$this->config['host']}"))
 		{
